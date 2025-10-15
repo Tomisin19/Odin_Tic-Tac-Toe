@@ -105,4 +105,5 @@ gameController.playRound(0);
 gameController.playRound(1);
 gameController.playRound(3);
 gameController.playRound(4);
+console.log(GameBoard.getBoard());
 gameController.playRound(6);
