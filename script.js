@@ -100,10 +100,12 @@ const gameController = (function () {
   return { startGame, playRound, resetGame };
 })();
 
-gameController.startGame();
-gameController.playRound(0);
-gameController.playRound(1);
-gameController.playRound(3);
-gameController.playRound(4);
-console.log(GameBoard.getBoard());
-gameController.playRound(6);
+// gameController.startGame();
+// gameController.playRound(0);
+// gameController.playRound(1);
+// gameController.playRound(3);
+// gameController.playRound(4);
+// gameController.playRound(6);
+// console.log(GameBoard.getBoard());
+
+const displayController = (function () {})();

@@ -1,0 +1,62 @@
+body{
+    background-color: #171123;
+}
+h1, .score{
+    font-family: 'Press Start 2P', cursive;
+    color: #7284A8;
+}
+.game{
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    gap: 48px;  
+}
+.playerScore{
+    display: flex;
+    flex-direction: row;
+    gap: 68px;
+}
+.winner{
+    font-family: 'Press Start 2P', cursive;
+    color: #7284A8;
+}
+.score{
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: center;
+}
+.playerScore div{
+    border: 1px solid #7284A8;
+    padding: 12px 24px;
+    border-radius: 16px;
+}
+h5, p{
+    margin: 0;
+    padding: 0;
+}
+#grid{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    /* margin-top: 12px; */
+    gap: 16px;
+}
+.cell {
+  width: 100px;
+  height: 100px;
+  background-color: #6b728e; /* or #7c83a3 for softer tone */
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  color: #FFEE88;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.cell:hover {
+  background-color: #8289aa;
+  cursor: pointer;;
+}
