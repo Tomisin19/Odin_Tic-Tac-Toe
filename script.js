@@ -52,7 +52,12 @@ const gameController = (function () {
       GameBoard.placeMarker(index, currentPlayer.marker);
       const winner = checkWinner();
       if (winner) {
-        console.log(`${currentPlayer.name} is the winner!`);
+        const winners = document.getElementById("winners");
+        let winnerText = document.createElement("p");
+        winnerText.textContent = `${currentPlayer.marker} is the winner!`;
+        winnerText.classList.toggle("winner");
+        winners.appendChild(winnerText);
+        // console.log(`${currentPlayer.name} is the winner!`);
         if (currentPlayer === player1) {
           player1Score++;
         } else {
@@ -61,6 +66,7 @@ const gameController = (function () {
       } else {
         currentPlayer = currentPlayer === player1 ? player2 : player1;
       }
+      displayController.render();
     }
   }
 
@@ -100,12 +106,23 @@ const gameController = (function () {
   return { startGame, playRound, resetGame };
 })();
 
-// gameController.startGame();
-// gameController.playRound(0);
-// gameController.playRound(1);
-// gameController.playRound(3);
-// gameController.playRound(4);
-// gameController.playRound(6);
-// console.log(GameBoard.getBoard());
+const displayController = (function () {
+  const cells = document.querySelectorAll(".cell");
+  cells.forEach((cell) => {
+    cell.addEventListener("click", (e) => {
+      const index = e.target.dataset.index;
+      gameController.playRound(index);
+    });
+  });
 
-const displayController = (function () {})();
+  function render() {
+    let board = GameBoard.getBoard();
+    cells.forEach((cell, i) => {
+      cell.textContent = board[i];
+    });
+  }
+
+  return { render };
+})();
+
+gameController.startGame();
