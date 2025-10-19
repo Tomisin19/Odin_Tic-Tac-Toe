@@ -57,7 +57,6 @@ const gameController = (function () {
         winnerText.textContent = `${currentPlayer.marker} is the winner!`;
         winnerText.classList.toggle("winner");
         winners.appendChild(winnerText);
-        // console.log(`${currentPlayer.name} is the winner!`);
         if (currentPlayer === player1) {
           player1Score++;
         } else {
@@ -91,7 +90,11 @@ const gameController = (function () {
     }
     if (!board.includes("")) {
       gameOver = true;
-      console.log("Its a draw!");
+      const draw = document.getElementById("winners");
+      let drawText = document.createElement("p");
+      drawText.textContent = ` It's a draw! `;
+      drawText.classList.toggle("winner");
+      draw.appendChild(drawText);
     }
     return null;
   }
