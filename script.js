@@ -14,7 +14,7 @@ const GameBoard = (function () {
   }
 
   function resetBoard() {
-    gameBoard.fill("");
+    gameBoard = ["", "", "", "", "", "", "", "", ""];
   }
   return { getBoard, placeMarker, resetBoard };
 })();
@@ -35,6 +35,8 @@ const gameController = (function () {
   let player2Score = 0;
   let currentPlayer;
 
+  const playerScore = document.getElementById("playerScore");
+
   function startGame() {
     GameBoard.resetBoard();
     GameBoard.getBoard();
@@ -43,9 +45,6 @@ const gameController = (function () {
   }
 
   function playRound(index) {
-    //place the marker of the currentPlayer at the chosen index
-    //check the board if the player has satisfied the conditions for a win
-    // if not, switch currentPlayer to player2 then repeat process
     if (gameOver || GameBoard.getBoard()[index] !== "") {
       return;
     } else {
@@ -57,11 +56,15 @@ const gameController = (function () {
         winnerText.textContent = `${currentPlayer.marker} is the winner!`;
         winnerText.classList.toggle("winner");
         winners.appendChild(winnerText);
+
         if (currentPlayer === player1) {
           player1Score++;
         } else {
           player2Score++;
         }
+
+        // update visible scores
+        displayController.updateScores();
       } else {
         currentPlayer = currentPlayer === player1 ? player2 : player1;
       }
@@ -105,8 +108,24 @@ const gameController = (function () {
     player2Score = 0;
     gameOver = false;
     currentPlayer = player1;
+    document.getElementById("winners").innerHTML = "";
+    // update visible scores after full reset
+    displayController.updateScores();
+    displayController.render();
   }
-  return { startGame, playRound, resetGame };
+  function nextRound() {
+    GameBoard.resetBoard();
+    gameOver = false;
+    currentPlayer = player1;
+    displayController.render();
+    document.getElementById("winners").innerHTML = "";
+  }
+
+  function getScores() {
+    return { player1: player1Score, player2: player2Score };
+  }
+
+  return { startGame, playRound, resetGame, getScores, nextRound };
 })();
 
 const displayController = (function () {
@@ -125,7 +144,36 @@ const displayController = (function () {
     });
   }
 
-  return { render };
+  function updateScores() {
+    const scores = gameController.getScores();
+    const p1 = document.getElementById("player1Score");
+    const p2 = document.getElementById("player2Score");
+    if (p1) p1.textContent = scores.player1;
+    if (p2) p2.textContent = scores.player2;
+  }
+  function resetGame() {
+    const reset = document.getElementById("restart");
+    reset.addEventListener("click", () => {
+      gameController.resetGame();
+    });
+  }
+
+  function nextRound() {
+    const next = document.getElementById("nextRound");
+    next.addEventListener("click", () => {
+      gameController.nextRound();
+    });
+  }
+  function displayControllers() {
+    render();
+    updateScores();
+    resetGame();
+    nextRound();
+  }
+
+  return { render, updateScores, resetGame, nextRound, displayControllers };
 })();
 
+// initialize UI
 gameController.startGame();
+displayController.displayControllers();
